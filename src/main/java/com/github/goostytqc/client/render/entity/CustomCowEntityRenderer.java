@@ -94,6 +94,7 @@ public class CustomCowEntityRenderer extends MobEntityRenderer<CowEntity, Entity
                         biomeId.equals(Identifier.of("minecraft", "old_growth_spruce_taiga")) ||
                         biomeId.equals(Identifier.of("minecraft", "taiga")) ||
                         biomeId.equals(Identifier.of("minecraft", "snowy_taiga")) ||
+                        biomeId.equals(Identifier.of("minecraft", "snowy_plains")) ||
                         biomeId.equals(Identifier.of("minecraft", "windswept_hills")) ||
                         biomeId.equals(Identifier.of("minecraft", "windswept_gravelly_hills")) ||
                         biomeId.equals(Identifier.of("minecraft", "windswept_forest"))
