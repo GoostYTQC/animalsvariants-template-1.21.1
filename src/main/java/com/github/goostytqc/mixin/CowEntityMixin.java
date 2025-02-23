@@ -22,7 +22,7 @@ public class CowEntityMixin {
         World world = entity.getWorld();
         UUID uuid = entity.getUuid();
 
-        if (world == null || world.isClient()) return; // Évite d'exécuter en client
+        if (world == null || world.isClient()) return;
 
         BlockPos pos = entity.getBlockPos();
         RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
@@ -31,7 +31,6 @@ public class CowEntityMixin {
 
         if (isColdBiome(biomeId)) {
             ColdCowTracker.addColdCow(uuid);
-            System.out.println("Nouvelle vache froide enregistrée : " + uuid);
         }
     }
 

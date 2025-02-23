@@ -33,7 +33,6 @@ public class CustomCowEntityRenderer extends MobEntityRenderer<CowEntity, Entity
     private final CustomCowEntityModel<CowEntity> defaultModel;
     private final ColdCowModel<CowEntity> coldModel;
 
-    // Cache pour éviter de recalculer les textures à chaque frame
     private final Map<UUID, Identifier> cachedTextures = new HashMap<>();
 
     public CustomCowEntityRenderer(EntityRendererFactory.Context context) {
@@ -46,18 +45,13 @@ public class CustomCowEntityRenderer extends MobEntityRenderer<CowEntity, Entity
     public Identifier getTexture(CowEntity entity) {
         UUID uuid = entity.getUuid();
 
-        // Si la texture est déjà enregistrée, la retourner directement
         if (cachedTextures.containsKey(uuid)) {
             return cachedTextures.get(uuid);
         }
 
-        // Vérifie si la vache a spawn dans un biome froid
         boolean isCold = ColdCowTracker.isColdCow(uuid, checkColdBiome(entity));
-
-        // Détermine la texture en fonction du statut de la vache
         Identifier chosenTexture = isCold ? getRandomColdTexture(uuid) : DEFAULT_TEXTURE;
 
-        // Stocke la texture en cache pour éviter de la recalculer
         cachedTextures.put(uuid, chosenTexture);
         return chosenTexture;
     }
@@ -65,26 +59,23 @@ public class CustomCowEntityRenderer extends MobEntityRenderer<CowEntity, Entity
     @Override
     public void render(CowEntity entity, float yaw, float tickDelta, net.minecraft.client.util.math.MatrixStack matrices, net.minecraft.client.render.VertexConsumerProvider vertexConsumers, int light) {
         UUID uuid = entity.getUuid();
-
-        // Vérifie si la vache est censée être Cold ou non
         boolean isCold = ColdCowTracker.isColdCow(uuid, checkColdBiome(entity));
 
-        // Applique le modèle correct en fonction du statut
         this.model = isCold ? this.coldModel : this.defaultModel;
 
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
     }
 
     private Identifier getRandomColdTexture(UUID uuid) {
-        int seed = uuid.hashCode(); // Utilise l'UUID comme seed pour rester constant
+        int seed = uuid.hashCode();
         Random seededRandom = new Random(seed);
-        int roll = seededRandom.nextInt(100); // Nombre de 0 à 99
+        int roll = seededRandom.nextInt(100);
 
-        if (roll < 5) return COLD_TEXTURES[0];   // 5% noir
-        if (roll < 25) return COLD_TEXTURES[1];  // 20% brun
-        if (roll < 75) return COLD_TEXTURES[2];  // 50% normal
-        if (roll < 95) return COLD_TEXTURES[3];  // 20% brun clair
-        return COLD_TEXTURES[4];                 // 5% blanc
+        if (roll < 5) return COLD_TEXTURES[0];
+        if (roll < 25) return COLD_TEXTURES[1];
+        if (roll < 75) return COLD_TEXTURES[2];
+        if (roll < 95) return COLD_TEXTURES[3];
+        return COLD_TEXTURES[4];
     }
 
     private boolean checkColdBiome(CowEntity entity) {
