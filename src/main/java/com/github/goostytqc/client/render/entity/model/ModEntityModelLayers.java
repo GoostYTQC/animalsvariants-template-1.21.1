@@ -7,9 +7,11 @@ import net.minecraft.util.Identifier;
 public class ModEntityModelLayers {
     public static final EntityModelLayer CUSTOM_COW = new EntityModelLayer(Identifier.of("animalsvariants", "custom_cow"), "main");
     public static final EntityModelLayer COLD_COW = new EntityModelLayer(Identifier.of("animalsvariants", "cold_cow"), "main");
+    public static final EntityModelLayer WARM_COW = new EntityModelLayer(Identifier.of("animalsvariants", "warm_cow"), "main");
 
     public static void register() {
         EntityModelLayerRegistry.registerModelLayer(CUSTOM_COW, CustomCowEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.COLD_COW, ColdCowModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.WARM_COW, WarmCowModel::getTexturedModelData);
     }
 }

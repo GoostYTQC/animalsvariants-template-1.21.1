@@ -1,6 +1,7 @@
 package com.github.goostytqc.mixin;
 
 import com.github.goostytqc.server.ColdCowTracker;
+import com.github.goostytqc.server.WarmCowTracker;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
@@ -32,6 +33,9 @@ public class CowEntityMixin {
         if (isColdBiome(biomeId)) {
             ColdCowTracker.addColdCow(uuid);
         }
+        if (isWarmBiome(biomeId)) {
+            WarmCowTracker.addWarmCow(uuid);
+        }
     }
 
     private boolean isColdBiome(Identifier biomeId) {
@@ -44,6 +48,21 @@ public class CowEntityMixin {
                         biomeId.equals(Identifier.of("minecraft", "windswept_hills")) ||
                         biomeId.equals(Identifier.of("minecraft", "windswept_gravelly_hills")) ||
                         biomeId.equals(Identifier.of("minecraft", "windswept_forest"))
+        );
+    }
+    private boolean isWarmBiome(Identifier biomeId) {
+        return biomeId != null && (
+                biomeId.equals(Identifier.of("minecraft", "savanna")) ||
+                        biomeId.equals(Identifier.of("minecraft", "savanna_plateau")) ||
+                        biomeId.equals(Identifier.of("minecraft", "windswept_savanna")) ||
+                        biomeId.equals(Identifier.of("minecraft", "jungle")) ||
+                        biomeId.equals(Identifier.of("minecraft", "sparse_jungle")) ||
+                        biomeId.equals(Identifier.of("minecraft", "bamboo_jungle")) ||
+                        biomeId.equals(Identifier.of("minecraft", "badlands")) ||
+                        biomeId.equals(Identifier.of("minecraft", "eroded_badlands")) ||
+                        biomeId.equals(Identifier.of("minecraft", "wooded_badlands")) ||
+                        biomeId.equals(Identifier.of("minecraft", "desert")) ||
+                        biomeId.equals(Identifier.of("minecraft", "mangrove_swamp"))
         );
     }
 }

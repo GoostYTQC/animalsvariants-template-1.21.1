@@ -7,6 +7,7 @@ import java.util.UUID;
 public class ColdCowTracker {
     private static final Set<UUID> coldCows = new HashSet<>();
 
+
     public static boolean isColdCow(UUID uuid, boolean coldBiome) {
         return coldCows.contains(uuid) || coldBiome;
     }
